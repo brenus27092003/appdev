@@ -1,0 +1,43 @@
+{% extends 'students/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Courses</h1>
+    <a href="{% url 'course_create' %}" class="btn btn-primary">Add New Course</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Credits</th>
+                <th>Instructor</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.course_code }}</td>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.credits }}</td>
+                <td>{{ course.instructor }}</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'course_edit' course.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{% url 'grade_create' %}?course={{ course.pk }}" class="btn btn-success btn-sm">Record Grade</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No courses found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 
